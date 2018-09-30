@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import { FlatList, View, Platform, TouchableOpacity, AsyncStorage } from "react-native";
+import {
+  FlatList,
+  View,
+  Platform,
+  TouchableOpacity,
+  AsyncStorage
+} from "react-native";
 import { MonoText } from "../components/StyledText";
 const result = require("./waste.json");
 import { Constants, Location, Permissions } from "expo";
 import { Ionicons } from "@expo/vector-icons";
-import xor from 'lodash.xor'
+import xor from "lodash.xor";
 
 function distance(lat1, lon1, lat2, lon2, unit) {
   var radlat1 = (Math.PI * lat1) / 180;
@@ -42,16 +48,35 @@ export default class SearchPage extends Component {
       headerTitleStyle: {
         fontWeight: "bold",
         fontFamily: "space-mono"
-      }
+      },
+      headerRight: (
+        <TouchableOpacity
+          style={{ marginRight: 8 }}
+          onPress={navigation.getParam("_toggleFavs")}
+        >
+          <Ionicons
+            size={32}
+            name={`md-heart${
+              navigation.getParam("toggleFavs") ? "" : "-outline"
+            }`}
+            color="white"
+          />
+        </TouchableOpacity>
+      )
     };
   };
   state = {
     location: null,
     errorMessage: null,
-    favs: []
+    favs: [],
+    toggleFavs: false
   };
 
   async componentDidMount() {
+    this.props.navigation.setParams({
+      _toggleFavs: this._toggleFavs,
+      toggleFavs: this.state.toggleFavs
+    });
     if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
         errorMessage:
@@ -60,9 +85,17 @@ export default class SearchPage extends Component {
     } else {
       this._getLocationAsync();
     }
-    const favs = await AsyncStorage.getItem('app:favs') || '[]'
-    this.setState({favs: JSON.parse(favs)})
+    const favs = (await AsyncStorage.getItem("app:favs")) || "[]";
+    this.setState({ favs: JSON.parse(favs) });
   }
+  _toggleFavs = () => {
+    this.setState(
+      p => ({ toggleFavs: !p.toggleFavs }),
+      () => {
+        this.props.navigation.setParams({ toggleFavs: this.state.toggleFavs });
+      }
+    );
+  };
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
@@ -74,11 +107,11 @@ export default class SearchPage extends Component {
     let location = await Location.getCurrentPositionAsync({});
     this.setState({ location });
   };
-  _toggle = (cp_id) => async () => {
-    const d = xor(this.state.favs, [cp_id])
-    await AsyncStorage.setItem('app:favs', JSON.stringify(d))
-    this.setState({favs: d})
-  }
+  _toggle = cp_id => async () => {
+    const d = xor(this.state.favs, [cp_id]);
+    await AsyncStorage.setItem("app:favs", JSON.stringify(d));
+    this.setState({ favs: d });
+  };
   _render = ({ item }) => (
     <TouchableOpacity
       onPress={() => this.props.navigation.navigate("Map", { item })}
@@ -106,7 +139,13 @@ export default class SearchPage extends Component {
         )}
         <View position="absolute" top={8} right={16}>
           <TouchableOpacity onPress={this._toggle(item.cp_id)}>
-            <Ionicons size={32} name={`md-heart${!!~this.state.favs.indexOf(item.cp_id)? '' : '-outline'}`} color='#2EBCD0' />
+            <Ionicons
+              size={32}
+              name={`md-heart${
+                !!~this.state.favs.indexOf(item.cp_id) ? "" : "-outline"
+              }`}
+              color="#2EBCD0"
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -121,6 +160,9 @@ export default class SearchPage extends Component {
     }
     if (district && district !== "Any") {
       res = res.filter(i => i.district_id.includes(district));
+    }
+    if (this.props.navigation.getParam("toggleFavs")) {
+      res = res.filter(i => !!~this.state.favs.indexOf(i.cp_id));
     }
     return (
       <View flex={1} backgroundColor="white">
