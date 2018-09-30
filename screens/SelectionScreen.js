@@ -4,6 +4,7 @@ import { View, FlatList, TouchableOpacity } from "react-native";
 
 const selections = {
   TYPE: [
+    "Any",
     "Barbeque Fork",
     "Clothes",
     "Computers",
@@ -17,6 +18,7 @@ const selections = {
     "Rechargeable Batteries"
   ],
   DISTRICT: [
+    "Any",
     "Central_Western",
     "Eastern",
     "Islands",
