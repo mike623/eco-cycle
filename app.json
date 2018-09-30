@@ -8,12 +8,7 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "icon": "./assets/ios.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -21,7 +16,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "icon": "./assets/ios.png"
+    },
+    "splash": {
+      "backgroundColor": "#ffffff",
+      "resizeMode": "cover",
+      "image": "./assets/images/splash.png"
+    },
+    "android": {
+      "icon": "./assets/ios.png"
     }
   }
 }
