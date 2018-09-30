@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { FlatList, View, Platform, TouchableOpacity } from "react-native";
+import { FlatList, View, Platform, TouchableOpacity, AsyncStorage } from "react-native";
 import { MonoText } from "../components/StyledText";
 const result = require("./waste.json");
 import { Constants, Location, Permissions } from "expo";
+import { Ionicons } from "@expo/vector-icons";
+import xor from 'lodash.xor'
 
 function distance(lat1, lon1, lat2, lon2, unit) {
   var radlat1 = (Math.PI * lat1) / 180;
@@ -45,10 +47,11 @@ export default class SearchPage extends Component {
   };
   state = {
     location: null,
-    errorMessage: null
+    errorMessage: null,
+    favs: []
   };
 
-  componentWillMount() {
+  async componentDidMount() {
     if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
         errorMessage:
@@ -57,6 +60,8 @@ export default class SearchPage extends Component {
     } else {
       this._getLocationAsync();
     }
+    const favs = await AsyncStorage.getItem('app:favs') || '[]'
+    this.setState({favs: JSON.parse(favs)})
   }
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -69,11 +74,14 @@ export default class SearchPage extends Component {
     let location = await Location.getCurrentPositionAsync({});
     this.setState({ location });
   };
+  _toggle = (cp_id) => async () => {
+    const d = xor(this.state.favs, [cp_id])
+    await AsyncStorage.setItem('app:favs', JSON.stringify(d))
+    this.setState({favs: d})
+  }
   _render = ({ item }) => (
     <TouchableOpacity
-      onPress={() =>
-        this.props.navigation.navigate("Map", {item})
-      }
+      onPress={() => this.props.navigation.navigate("Map", { item })}
     >
       <View paddingVertical={16} paddingHorizontal={32} position="relative">
         <View width="80%" flexDirection="column">
@@ -96,6 +104,11 @@ export default class SearchPage extends Component {
             </MonoText>
           </View>
         )}
+        <View position="absolute" top={8} right={16}>
+          <TouchableOpacity onPress={this._toggle(item.cp_id)}>
+            <Ionicons size={32} name={`md-heart${!!~this.state.favs.indexOf(item.cp_id)? '' : '-outline'}`} color='#2EBCD0' />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -116,6 +129,7 @@ export default class SearchPage extends Component {
           data={res}
           renderItem={this._render}
           keyExtractor={i => `${i.cp_id}`}
+          extraData={this.state}
           ItemSeparatorComponent={() => (
             <View
               marginLeft={32}
