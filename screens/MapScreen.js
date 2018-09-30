@@ -5,7 +5,7 @@ import { Marker } from 'react-native-maps';
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("title", "A Nested Details Screen"),
+      title: navigation.getParam("item").address_en,
       headerStyle: {
         backgroundColor: "#2EBCD0"
       },
@@ -17,17 +17,17 @@ export default class MapScreen extends Component {
     };
   };
   render() {
-    const latitude = this.props.navigation.getParam('latitude');
-    const longitude = this.props.navigation.getParam('longitude');
+    const latitude = this.props.navigation.getParam('item').lat;
+    const longitude = this.props.navigation.getParam('item').lgt;
     return (
       <MapView
         style={{ flex: 1 }}
-        minZoomLevel={13}
+        // minZoomLevel={15}
         initialRegion={{
           latitude,
           longitude,
-          latitudeDelta: 0.0,
-          longitudeDelta: 0.0,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
       >
       <Marker
@@ -35,8 +35,8 @@ export default class MapScreen extends Component {
           latitude,
           longitude,
         }}
-        title={this.props.navigation.getParam("title")}
-        // description={marker.description}
+        title={this.props.navigation.getParam("item").address_en}
+        description={this.props.navigation.getParam("item").waste_type}
       />
       </MapView>
     )

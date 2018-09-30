@@ -72,11 +72,7 @@ export default class SearchPage extends Component {
   _render = ({ item }) => (
     <TouchableOpacity
       onPress={() =>
-        this.props.navigation.navigate("Map", {
-          latitude: item.lat,
-          longitude: item.lgt,
-          title: item.address_tc
-        })
+        this.props.navigation.navigate("Map", {item})
       }
     >
       <View paddingVertical={16} paddingHorizontal={32} position="relative">
@@ -106,10 +102,13 @@ export default class SearchPage extends Component {
   render() {
     let res = result;
     const type = this.props.navigation.getParam("type");
+    const district = this.props.navigation.getParam("district");
     if (type && type !== "Any") {
       res = res.filter(i => i.waste_type.includes(type));
     }
-    // console.log({res});
+    if (district && district !== "Any") {
+      res = res.filter(i => i.district_id.includes(district));
+    }
     return (
       <View flex={1} backgroundColor="white">
         <FlatList
