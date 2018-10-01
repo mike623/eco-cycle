@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff",
         "resizeMode": "cover",
         "image": "./assets/splash.png"
-      },
+      }
     },
     "android": {
       "config": {
