@@ -23,7 +23,7 @@
     "ios": {
       "bundleIdentifier": "me.mike.recycle",
       "supportsTablet": false,
-      "icon": "./assets/ios.png",
+      "icon": "./assets/ios.png"
     },
     "android": {
       "config": {
