@@ -15,21 +15,26 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "splash": {
-      "backgroundColor": "#ffffff",
-      "resizeMode": "cover",
-      "image": "./assets/splash.png"
-    },
     "ios": {
       "bundleIdentifier": "me.mike.recycle",
       "supportsTablet": false,
-      "icon": "./assets/ios.png"
+      "icon": "./assets/ios.png",
+      "splash": {
+        "backgroundColor": "#ffffff",
+        "resizeMode": "cover",
+        "image": "./assets/splash.png"
+      },
     },
     "android": {
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC_1vJDCl437FxcFI8I36BihiMcZ7YdDS8"
         }
+      },
+      "splash": {
+        "backgroundColor": "#ffffff",
+        "resizeMode": "cover",
+        "image": "./assets/splash.png"
       },
       "package": "me.mike.recycle",
       "icon": "./assets/android.png",
