@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "recycle",
+    "name": "eco-cycle",
     "description": "A very interesting project.",
-    "slug": "recycle",
+    "slug": "eco-recycle",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": ["ios", "android"],
@@ -16,6 +16,7 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "me.mike.recycle",
       "supportsTablet": false,
       "icon": "./assets/ios.png",
       "splash": {
