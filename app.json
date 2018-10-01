@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "lesswaste",
+    "name": "recycle",
     "description": "A very interesting project.",
-    "slug": "lesswaste",
+    "slug": "recycle",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": ["ios", "android"],
