@@ -18,7 +18,7 @@
     "ios": {
       "bundleIdentifier": "me.mike.recycle",
       "supportsTablet": false,
-      "buildNumber": "2",
+      "buildNumber": "3",
       "icon": "./assets/ios.png",
       "splash": {
         "backgroundColor": "#ffffff",
