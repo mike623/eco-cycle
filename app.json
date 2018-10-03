@@ -24,6 +24,9 @@
         "backgroundColor": "#ffffff",
         "resizeMode": "cover",
         "image": "./assets/splash.png"
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Turn on Location service to determine distance of each place"
       }
     },
     "android": {
