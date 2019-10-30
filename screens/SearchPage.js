@@ -59,7 +59,7 @@ export default class SearchPage extends Component {
           <Ionicons
             size={32}
             name={`md-heart${
-              navigation.getParam("toggleFavs") ? "" : "-outline"
+              navigation.getParam("toggleFavs") ? "" : "-empty"
             }`}
             color="white"
           />
@@ -144,7 +144,7 @@ export default class SearchPage extends Component {
             <Ionicons
               size={32}
               name={`md-heart${
-                !!~this.state.favs.indexOf(item.cp_id) ? "" : "-outline"
+                !!~this.state.favs.indexOf(item.cp_id) ? "" : "-empty"
               }`}
               color="#2EBCD0"
             />
