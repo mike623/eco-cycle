@@ -8,7 +8,9 @@ import {
 } from "react-native";
 import { MonoText } from "../components/StyledText";
 const result = require("./waste.json");
-import { Constants, Location, Permissions } from "expo";
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
+import Constants from 'expo-constants';
 import { Ionicons } from "@expo/vector-icons";
 import xor from "lodash.xor";
 

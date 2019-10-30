@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { MapView } from 'expo';
-import { Marker } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 export default class MapScreen extends Component {
   static navigationOptions = ({ navigation }) => {
