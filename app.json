@@ -18,7 +18,7 @@
     "ios": {
       "bundleIdentifier": "me.mike.recycle",
       "supportsTablet": false,
-      "buildNumber": "3",
+      "buildNumber": "4",
       "icon": "./assets/ios.png",
       "splash": {
         "backgroundColor": "#ffffff",
@@ -42,7 +42,7 @@
       },
       "package": "me.mike.recycle",
       "icon": "./assets/android.png",
-      "versionCode": 1,
+      "versionCode": 2,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
